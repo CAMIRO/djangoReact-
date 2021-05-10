@@ -6,7 +6,7 @@ export class Header extends Component {
       <nav className="navbar navbar-expand-sm navbar-light bg-light">
         <div className="container-fluid">
           <a className="navbar-brand" href="#">
-            Lead Managers
+            Lead Manager
           </a>
           <button
             className="navbar-toggler"
