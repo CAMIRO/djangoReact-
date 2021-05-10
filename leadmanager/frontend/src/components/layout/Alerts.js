@@ -29,6 +29,7 @@ export class Alerts extends Component {
     // 2. MESSAGE REDUCER
     if (message !== prevProps.message) {
       if (message.deleteLead) alert.success(message.deleteLead);
+      if (message.addLead) alert.success(message.addLead);
     }
   }
   render() {
