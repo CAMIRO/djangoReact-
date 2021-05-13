@@ -1,9 +1,15 @@
 import axios from "axios";
 import { returnErrors } from "./messages";
 
-import { USER_LOADING, USER_LOADED, AUTH_ERROR } from "./types";
+import {
+  USER_LOADING,
+  USER_LOADED,
+  AUTH_ERROR,
+  LOGIN_SUCCESS,
+  LOGIN_FAIL,
+} from "./types";
 
-// CHECK TOKEN & LOAD USER
+// 1) CHECK TOKEN & LOAD USER
 export const loadUser = () => (dispatch, getState) => {
   // User Loading
   dispatch({ type: USER_LOADING });
@@ -34,6 +40,35 @@ export const loadUser = () => (dispatch, getState) => {
       dispatch(returnErrors(err.response.data, err.response.status));
       dispatch({
         type: AUTH_ERROR,
+      });
+    });
+};
+
+// 2) LOGIN USER
+export const login = (username, password) => (dispatch) => {
+  // Headers
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  // Request Body
+  const body = JSON.stringify({ username, password });
+  console.log("🚀 ~ file: auth.js ~ line 57 ~ login ~ body", body);
+
+  // post Request
+  axios
+    .post("/api/auth/login", body, config)
+    .then((res) => {
+      dispatch({
+        type: LOGIN_SUCCESS,
+        payload: res.data,
+      });
+    })
+    .catch((err) => {
+      dispatch(returnErrors(err.response.data, err.response.status));
+      dispatch({
+        type: LOGIN_FAIL,
       });
     });
 };
