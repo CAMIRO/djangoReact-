@@ -25,6 +25,10 @@ export class Alerts extends Component {
       if (error.msg.message) {
         alert.error(`Message: ${error.msg.message.join()}`);
       }
+      // 1.d Login Error
+      if (error.msg.non_field_errors) {
+        alert.error(error.msg.non_field_errors.join());
+      }
     }
     // 2. MESSAGE REDUCER
     if (message !== prevProps.message) {

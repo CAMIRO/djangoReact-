@@ -7,6 +7,7 @@ import {
   AUTH_ERROR,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
+  LOGOUT_SUCCESS,
 } from "./types";
 
 // 1) CHECK TOKEN & LOAD USER
@@ -14,22 +15,9 @@ export const loadUser = () => (dispatch, getState) => {
   // User Loading
   dispatch({ type: USER_LOADING });
 
-  // Get token from state
-  const token = getState().auth.token;
-
-  // Headers
-  const config = {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  };
-  // If token, add to headers config
-  if (token) {
-    config.headers["Authorization"] = `Token ${token}`;
-  }
   // Get - Request the User
   axios
-    .get("/api/auth/user", config)
+    .get("/api/auth/user", tokenConfig(getState))
     .then((res) => {
       dispatch({
         type: USER_LOADED,
@@ -54,8 +42,6 @@ export const login = (username, password) => (dispatch) => {
   };
   // Request Body
   const body = JSON.stringify({ username, password });
-  console.log("🚀 ~ file: auth.js ~ line 57 ~ login ~ body", body);
-
   // post Request
   axios
     .post("/api/auth/login", body, config)
@@ -71,4 +57,37 @@ export const login = (username, password) => (dispatch) => {
         type: LOGIN_FAIL,
       });
     });
+};
+
+// 3) LOGOUT USER
+export const logout = () => (dispatch, getState) => {
+  // Get - Request the User
+  axios
+    .post("/api/auth/logout/", null, tokenConfig(getState))
+    .then((res) => {
+      dispatch({
+        type: LOGOUT_SUCCESS,
+      });
+    })
+    .catch((err) => {
+      dispatch(returnErrors(err.response.data, err.response.status));
+    });
+};
+
+// Setup config with token - helper function
+
+export const tokenConfig = (getState) => {
+  // Get token from state
+  const token = getState().auth.token;
+  // Headers
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  // If token, add to headers config
+  if (token) {
+    config.headers["Authorization"] = `Token ${token}`;
+  }
+  return config;
 };
