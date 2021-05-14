@@ -2,7 +2,7 @@ import {
   GET_LEADS,
   DELETE_LEAD,
   ADD_LEAD,
-  LOGOUT_SUCCESS,
+  //LOGOUT_SUCCESS,
 } from "../actions/types.js";
 
 const initialState = {
@@ -26,11 +26,11 @@ export default function (state = initialState, action) {
         ...state,
         leads: [...state.leads, action.payload],
       };
-    case LOGOUT_SUCCESS:
-      return {
-        ...state,
-        leads: [],
-      };
+    // case LOGOUT_SUCCESS:
+    //   return {
+    //     ...state,
+    //     leads: [],
+    //   };
     default:
       return state;
   }

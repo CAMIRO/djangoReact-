@@ -25,7 +25,6 @@ export class Leads extends Component {
               <th>Name</th>
               <th>Email</th>
               <th>Message</th>
-              <th>ID</th>
               <th />
             </tr>
           </thead>
