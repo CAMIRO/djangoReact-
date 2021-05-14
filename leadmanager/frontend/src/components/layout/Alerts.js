@@ -29,11 +29,19 @@ export class Alerts extends Component {
       if (error.msg.non_field_errors) {
         alert.error(error.msg.non_field_errors.join());
       }
+      // 1.d User already exist
+      if (error.msg.username) {
+        alert.error(error.msg.username.join());
+      }
     }
     // 2. MESSAGE REDUCER
     if (message !== prevProps.message) {
+      // Message delete Lead
       if (message.deleteLead) alert.success(message.deleteLead);
+      // Message added lead
       if (message.addLead) alert.success(message.addLead);
+      // Message password Not Match
+      if (message.passwordNotMatch) alert.error(message.passwordNotMatch);
     }
   }
   render() {
