@@ -2,7 +2,20 @@
 
 > Full stack Django/React/Redux app that uses token based authentication with Knox.
 
-## Quick Start
+## Start Docker
+
+```bash
+# star-stop container
+docker-compose up / down
+
+# Run Django app
+docker exec -it django bash
+
+# Run DB (Postgres)
+docker exec -it postgres psql -U postgres
+```
+
+## Run project
 
 ```bash
 # Install dependencies
